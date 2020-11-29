@@ -40,14 +40,6 @@ class Dashboard extends StatelessWidget {
   }
 }
 
-void _showTransactionsList(BuildContext context) {
-  Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (context) => TransactionsList(),
-    ),
-  );
-}
-
 class _FeatureItem extends StatelessWidget {
   final String name;
   final IconData icon;
@@ -97,6 +89,14 @@ void _showContactsList(BuildContext context) {
   Navigator.of(context).push(
     MaterialPageRoute(
       builder: (context) => ContatctsList(),
+    ),
+  );
+}
+
+void _showTransactionsList(BuildContext context) {
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (context) => TransactionsList(),
     ),
   );
 }
