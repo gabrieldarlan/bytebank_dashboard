@@ -1,4 +1,3 @@
-
 import 'package:bytebank_dashboard/models/contact.dart';
 
 class Transaction {
@@ -14,4 +13,15 @@ class Transaction {
   String toString() {
     return 'Transaction{value: $value, contact: $contact}';
   }
+
+  Transaction.fromJson(Map<String, dynamic> json)
+      : value = json['value'],
+        contact = Contact.fromJson(json['contact']);
+
+
+   Map<String, dynamic> toJson() =>
+    {
+      'value': value,
+      'contact': contact.toJson(),
+    };
 }
