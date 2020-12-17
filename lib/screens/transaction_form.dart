@@ -54,40 +54,44 @@ class _TransactionFormState extends State<TransactionForm> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: SizedBox(
-                  width: double.maxFinite,
-                  child: RaisedButton(
-                    child: Text('Transfer'),
-                    onPressed: () {
-                      final double value =
-                          double.tryParse(_valueController.text);
-                      final transactionCreated =
-                          Transaction(value, widget.contact);
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return TransactionAuthDialog(
-                            onConfirm: (String password) {
-                              _webClient.save(transactionCreated, password).then(
-                                (transaction) {
-                                  if (transaction != null) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                              );
-                            },
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ),
-              )
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: SizedBox(
+                    width: double.maxFinite,
+                    child: RaisedButton(
+                        child: Text('Transfer'),
+                        onPressed: () {
+                          final double value =
+                              double.tryParse(_valueController.text);
+                          final transactionCreated =
+                              Transaction(value, widget.contact);
+                          showDialog(
+                              context: context,
+                              builder: (contextDialog) {
+                                return TransactionAuthDialog(
+                                  onConfirm: (String password) {
+                                    _save(
+                                        transactionCreated, password, context);
+                                  },
+                                );
+                              });
+                        }),
+                  ))
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _save(
+    Transaction transactionCreated,
+    String password,
+    BuildContext context,
+  ) async {
+    _webClient.save(transactionCreated, password).then((transaction) {
+      if (transaction != null) {
+        Navigator.pop(context);
+      }
+    });
   }
 }
